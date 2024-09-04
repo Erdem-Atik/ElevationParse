@@ -7,11 +7,14 @@ def interpolate_points(start, end, distance):
     lat1, lon1 = start
     lat2, lon2 = end
     total_distance = ((lat2 - lat1) ** 2 + (lon2 - lon1) ** 2) ** 0.5
+    print(f'total_distance: {total_distance}')
     points = []
     if total_distance == 0:
         return [start]
     
     num_points = int(total_distance // distance)
+    print(f'num_points: {num_points}')
+
     for i in range(num_points):
         fraction = i / num_points
         lat = lat1 + fraction * (lat2 - lat1)
@@ -35,16 +38,11 @@ def get_elevation_data(coordinates, interval=50):
     all_points = []
 
     for i in range(len(coordinates) - 1):
- 
         start = coordinates[i]
-
         end = coordinates[i + 1]
-        all_points.extend(interpolate_points(start, end, interval))
+        all_points.extend(interpolate_points(start, end, interval))   # Prepare the API query
 
-    # Prepare the API query
-    
-    
-
+   
 coordinates = [(35.37595845788469, 38.9522538283185), (35.37859798212953, 38.95242226297977), (35.37879484832216, 38.9542421701009), (35.37591846319395, 38.95436793389439), (35.37595845788469, 38.9522538283185)]
     
 

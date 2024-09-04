@@ -17,17 +17,16 @@ def extract_kml_from_kmz(kmz_filepath):
 # Parses the KML data to extract coordinates
 def parse_kml_for_coordinates(kml_data):
     namespace = {'kml': 'http://www.opengis.net/kml/2.2'}  # Define the namespace for KML elements
- 
     root = ET.fromstring(kml_data)  # Parse the KML data into an XML tree
-   
-
     for placemark in root.findall('.//kml:Placemark', namespace):  # Find all Placemark elements
 
         for polygon in placemark.findall('.//kml:Polygon/kml:outerBoundaryIs/kml:LinearRing/kml:coordinates', namespace):
             coord_text = polygon.text.strip()  # Get the coordinate text from the KML
-            coord_list = [tuple(map(float, coord.split(',')[:2])) for coord in coord_text.split()]  # Parse the coordinates into (longitude, latitude) tuples
+            coord_list = [tuple(map(float, coord.split(',')[:2]))[::-1] for coord in coord_text.split()]  # Parse the coordinates into (longitude, latitude) tuples
             
-    print(f'coord_list: {coord_list}')
+            
+
+    print(coord_list)        
     return coord_list  # Return the list of coordinates of corners of area
 
 # Determines the number of GCPs based on area size and terrain complexity
